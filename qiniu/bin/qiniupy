@@ -1,0 +1,10 @@
+#!/Users/lixinxing/Desktop/AutoPackaging/qiniu/bin/python2.7
+# EASY-INSTALL-ENTRY-SCRIPT: 'qiniu==7.0.5','console_scripts','qiniupy'
+__requires__ = 'qiniu==7.0.5'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('qiniu==7.0.5', 'console_scripts', 'qiniupy')()
+    )
