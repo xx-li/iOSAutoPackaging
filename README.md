@@ -5,10 +5,12 @@
 	+ xctool 是FaceBook开源的一个命令行工具，用来替代苹果的xcodebuild工具。
 	+ 没有安装xctool，可以用brew安装，没有安装brew的，可以通过搜索安装brew，然后执行如下操作安装xctool:`sudo brew install xctool`             
 + 找到Config.py，根据里面的注释做好配置设置
++ 在template文件夹里放入正确的模板plist文件，这个程序只会改模板plist中ipa包下载地址对应的值
 + 在终端定位到项目所在文件夹，执行`qiniu/bin/python Client.py`
 + 等待脚本运行完成，运行完成后自动打好的ipa包和plist文件都会上传到Config.py配置好的七牛服务器上，并且在History文件夹里面保存对应的archive文件、ipa文件、plist文件
 
 **另外这里使用了Python的[虚拟环境](http://www.pythondoc.com/flask-mega-tutorial/helloworld.html#flask)**
+
 **如果不想上传七牛服务器，不配置七牛的相关信息即可(上传失败)**
 
 ###原理说明
