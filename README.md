@@ -63,7 +63,7 @@ xcodebuild -exportArchive -archivePath /Users/lixinxing/Library/Developer/Xcode/
 这个例子的含义可以结合上面的参数说明进行理解，这样就完成的打包工作，生成了一个`test.ipa`文件放在`/Users/lixinxing/Desktop/test/`目录下
 
 ####3、生成plist文件
-为了简单，这里生成的plist文件是通过编辑模板plist文件的一些key的value来生成的，这里只改变了plist文件里面ipa包下载地址对应的key。这样对plist文件进行编辑使用的是`Python`的`biplist`
+为了简单，这里生成的plist文件是通过编辑模板plist文件的一些key的value来生成的，这里只改变了plist文件里面ipa包下载地址对应的key。这里对plist文件进行编辑使用的是`Python`的`biplist`
 
 ####4、上传七牛
 使用七牛提供的`Python SDK`, 上传七牛，具体介绍见[七牛的官方文档](http://developer.qiniu.com/docs/v6/sdk/python-sdk.html)，使用可以在Client.py文件中看到。
