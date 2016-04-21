@@ -2,14 +2,29 @@
 __author__ = 'lixinxing'
 
 # 需要打包的项目信息
-project_path = '需要打包的项目所在路径'
-workspace_name = '打开项目的那个文件的名字,如test.xcworkspace'
-scheme_name = 'scheme名字'
-provisioning_profile = '用于打包的Profile的名字'
-template_plist_name = '用于生产plist文件的模板,如test.plist,放在template文件夹下'
+project_path = '项目所在目录'
+workspace_name = 'test.xcworkspace'
+scheme_name = 'test'
+template_plist_name = 'test.plist'
+resign_plist_name = 'entitlements.plist'
+
+# 个人证书，用于打包ipa
+provisioning_profile = 'testprofile'
+
+#重新签名信息
+#企业证书名字
+ep_cer_name = 'test'
+# 企业账号，用于重签。需要放入template目录下
+ep_provisioning_profile = 'test.mobileprovision'
+
+# 企业证书对应的Prefix
+# ep_cer_prefix = '828E9CDH58'
+# 企业账号用于发布的*Provisioning Profiles*对应的*Bundle Identifier
+# ep_provisioning_BI = 'com.test.test'
+
 
 # 七牛配置
-access_key = '你的七牛access_key'
-secret_key = '你的七牛secret_key'
-bucket_name = 'apprelease'
-ipa_base_url = 'http://7xllwe.dl1.z0.glb.clouddn.com/'
+access_key = 'test'
+secret_key = 'test'
+bucket_name = 'test'
+ipa_base_url = 'test'

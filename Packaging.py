@@ -9,7 +9,7 @@ import datetime
 
 class Packaging:
     def newIpa(self):
-        formt_time = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+        formt_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
         archive_name = Config.scheme_name + formt_time + '.xcarchive'
         archivePath = os.path.abspath(os.path.join(os.path.dirname(__file__),'history', archive_name))
         workspacePath = Config.project_path + Config.workspace_name

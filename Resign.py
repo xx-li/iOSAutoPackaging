@@ -87,6 +87,6 @@ if  __name__ == '__main__':
     dir = os.path.join(os.path.dirname(__file__), 'history')
     print dir
     # 获取各路径
-    ipaPath = os.path.abspath(os.path.join(dir, 'test.ipa'))
+    ipaPath = os.path.abspath(os.path.join(dir, 'PEPatient201604091413.ipa'))
     new_ipa = Resign().start(ipaPath)
     print new_ipa

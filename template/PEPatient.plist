@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>https://www.test.com</string>
+					<string>https://dn-test.qbox.me/test.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -19,7 +19,7 @@
 					<key>needs-shine</key>
 					<false/>
 					<key>url</key>
-					<string>https://www.test.com/display-icon-gds.png</string>
+					<string>https://dn-test.qbox.me/full-120-test.png</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -27,13 +27,13 @@
 					<key>needs-shine</key>
 					<false/>
 					<key>url</key>
-					<string>https://www.test.com/full-size-icon-gds.png</string>
+					<string>https://dn-test.qbox.me/display-60-test.png</string>
 				</dict>
 			</array>
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>com.xxli.test</string>
+				<string>com.test.test</string>
 				<key>bundle-version</key>
 				<string>1.0</string>
 				<key>kind</key>

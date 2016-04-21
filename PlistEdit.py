@@ -11,7 +11,7 @@ import Config
 class PlistEdit:
     # 保存生成的plist，并且将路径返回
     def savenewplist(self, plist):
-        formt_time = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+        formt_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
         save_name = Config.scheme_name + formt_time + '.plist'
         plist_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'history', save_name))
 
