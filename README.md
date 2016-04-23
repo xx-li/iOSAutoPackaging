@@ -35,7 +35,7 @@ $ venu/bin/pip install -r requirements
 
 + 7、自动打包
 	+ 执行`venv/bin/python Client.py`。上传成功后会让你输入版本注释，输入后点击回车就会发邮件，整个流程就走完了。
-	> 打包完成后，可以在history文件夹下看到生成的ipa包以及改好的plist文件等
+> 打包完成后，可以在history文件夹下看到生成的ipa包以及改好的plist文件等
 
 
 ###原理说明
