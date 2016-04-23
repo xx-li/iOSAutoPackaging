@@ -1,24 +1,46 @@
 在我们日常的工作中，经常需要打包给测试进行测试，或者给产品经理体验。一次又一次的手动打包，修改plist文件，上传服务器浪费了我们大量宝贵的学习时间。
-这是一个用于自动打包的Python脚本，可以直接打包ipa并生成对应的plist，并上传指定的七牛服务器。这所有的动作只需要在终端敲入一行命令即可解决。
-###如何开始
-+ 确保安装了xctool
-	+ xctool 是FaceBook开源的一个命令行工具，用来替代苹果的xcodebuild工具。
-	+ 没有安装xctool，可以用brew安装，没有安装brew的，可以通过搜索安装brew，然后执行如下操作安装xctool:`sudo brew install xctool`             
-+ 找到Config.py，根据里面的注释做好配置设置
-+ 在template文件夹里放入正确的模板plist文件，这个程序只会改模板plist中ipa包下载地址对应的值
-+ 在终端定位到项目所在文件夹，执行`qiniu/bin/python Client.py`
-+ 等待脚本运行完成，运行完成后自动打好的ipa包和plist文件都会上传到Config.py配置好的七牛服务器上，并且在History文件夹里面保存对应的archive文件、ipa文件、plist文件
+这是一个用于自动打包的Python脚本，可以直接打包ipa并生成对应的plist，然后使用企业证书进行重签名，并上传指定的七牛服务器。这所有的动作只需要在终端敲入一行命令即可解决。
 
-**另外这里使用了Python的[虚拟环境](http://www.pythondoc.com/flask-mega-tutorial/helloworld.html#flask)**
+###功能流程说明
+`打包ipa`-->`重签名ipa`-->`生成plist文件`-->`上传服务器`-->`发送邮件`
 
-**如果不想上传七牛服务器，不配置七牛的相关信息即可(上传失败)**
+###使用说明（针对`iOS开发者`）
++ 1、安装`HomeBrew` 
+	+ 安装命令：`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
++ 2、安装`xctool`用于`iOS项目`打包
+	+ `brew install xctool`
+
++ 3、安装`pip`
+	+ 1.我们先获取`pip`安装脚本:`wget https://bootstrap.pypa.io/get-pip.py`
+	如果没有安装`wget`可以执行`brew install wget`安装
+	+ 2.安装pip `sudo python get-pip.py`
+
++ 4、安装Python虚拟环境virtualenv
+	+ `$ sudo pip install virtualenv`
+
++ 5、进入下载的项目所在的目录
+```shell
+$ cd (you path)
+$ virtualenv venv		执行此命令后会在当前目录下创建一个venu文件夹
+New python executable in venv/bin/python
+Installing distribute............done.
+$ venu/bin/pip install -r requirements
+```
+
++ 6、配置项目
+	+ 修改`entitlements.plist`文件，不知道修改可以看我的博文[iOS证书及ipa包重签名](http://devlxx.com/ioszheng-shu-ji-ipabao-zhong-qian-ming/)
+	+ 修改`test.plist`,根据这个plist文件来安装app，具体配置方法可以搜索iOS企业发布流程
+	+ 修改`Config.py`文件,如何配置根据注释来。
+
++ 7、自动打包
+	+ 执行`venv/bin/python Client.py`。上传成功后会让你输入版本注释，输入后点击回车就会发邮件，整个流程就走完了。
+	> 打包完成后，可以在history文件夹下看到生成的ipa包以及改好的plist文件等
+
 
 ###原理说明
-要完成这几个动作，我们需要做四件事情，依次是archive--->打包成ipa--->生成对应的plist文件--->上传七牛，下面来依次说明原理。
-
-####一、archive
-使用xctool执行archive操作，下面对xctool的参数和命令进行一个说明。为了能运行shell命令，使用了`Python`的`subprocess`库
-
+####archive
+使用`xctool`执行`archive`操作，`xctool`是`FaceBook`开源的一个命令行工具，用来替代苹果的`xcodebuild`工具。下面对xctool的参数和命令进行一个说明。为了能运行shell命令，此项目使用了`Python`的`subprocess`库
 + 参数：
 ```
 -workspace 需要打包的workspace 后面接的文件一定要是.xcworkspace 结尾的
@@ -30,8 +52,7 @@
 clean 清除编译产生的问题，下次编译就是全新的编译了
 archive 打包命令，会生成一个.xcarchive的文件
 ```
-注：archive命令需要接一个参数：-archivePath 即你存放Archive文件的目录
-
+注：`archive`命令需要接一个参数：-archivePath 即你存放Archive文件的目录
 + 使用说明
 	+ 命令：`xctool -workspace ProjectName.xcworkspace -scheme SchemeName clean archive`
 	+ 样例：`xctool -workspace /Users/lixinxing/Desktop/SchemeName_APP/ProjectName.xcworkspace -scheme SchemeName clean archive -archivePath /Users/lixinxing/Desktop/iOSAutoPackaging/history/test.xcarchive`
@@ -62,11 +83,18 @@ xcodebuild -exportArchive -archivePath /Users/lixinxing/Library/Developer/Xcode/
 ```
 这个例子的含义可以结合上面的参数说明进行理解，这样就完成的打包工作，生成了一个`test.ipa`文件放在`/Users/lixinxing/Desktop/test/`目录下
 
-####3、生成plist文件
+####3、重签名
+[iOS证书及ipa包重签名](http://devlxx.com/ioszheng-shu-ji-ipabao-zhong-qian-ming/)
+
+####4、生成plist文件
 为了简单，这里生成的plist文件是通过编辑模板plist文件的一些key的value来生成的，这里只改变了plist文件里面ipa包下载地址对应的key。这里对plist文件进行编辑使用的是`Python`的`biplist`
 
-####4、上传七牛
+####5、上传七牛
 使用七牛提供的`Python SDK`, 上传七牛，具体介绍见[七牛的官方文档](http://developer.qiniu.com/docs/v6/sdk/python-sdk.html)，使用可以在Client.py文件中看到。
 
-####5、TODO
+python-sdk.html)，使用可以在Client.py文件中看到。
+
+####6、发送邮件
+
+####7、TODO
 直接从七牛获取所有的plist文件， 自动生成网页。
