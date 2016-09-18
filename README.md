@@ -25,7 +25,7 @@ $ cd (you path)
 $ virtualenv venv		执行此命令后会在当前目录下创建一个venu文件夹
 New python executable in venv/bin/python
 Installing distribute............done.
-$ venu/bin/pip install -r requirements
+$ venv/bin/pip install -r requirements.txt
 ```
 
 + 6、配置项目
